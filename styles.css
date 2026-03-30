@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+  color: #1f2937;
+  background: #f5f7fb;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: #ffffff;
+  padding-bottom: 48px;
+}
+
+.top-nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.nav-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.hero-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 0;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  max-width: 900px;
+}
+
+.author {
+  margin: 0;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+.container {
+  max-width: 1100px;
+  margin: -28px auto 0;
+  padding: 0 24px 48px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+.placeholder,
+.placeholder-list,
+.note {
+  color: #6b7280;
+}
+
+.placeholder-list {
+  padding-left: 22px;
+}
+
+.resource-list {
+  padding-left: 22px;
+}
+
+.resource-list a,
+.card a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.resource-list a:hover,
+.card a:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  text-align: center;
+  padding: 28px 16px 36px;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .top-nav {
+    align-items: flex-start;
+  }
+}

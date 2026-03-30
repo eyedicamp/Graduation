@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="top-nav">
+      <div class="nav-title">Master's Thesis</div>
+      <ul class="nav-links">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#motivation">Motivation</a></li>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#references">References</a></li>
+        <li><a href="#related-sites">Related Sites</a></li>
+        <li><a href="#resources">Files</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <p class="eyebrow">Pusan National University · Master's Thesis</p>
+      <h1>Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction</h1>
+      <p class="author">Seungyun Shin</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="abstract" class="card">
+      <h2>Abstract</h2>
+      <p>
+        Cardiovascular disease (CVD) risk prediction can benefit from combining electronic
+        health records (EHR) with genetic information, yet most existing approaches assume
+        that polygenic risk scores (PRS) contribute uniformly across individuals and often
+        place limited emphasis on calibration and clinical decision utility. This thesis
+        investigates an interpretable multimodal framework for 5-year CVD risk prediction in
+        the UK Biobank by adaptively integrating structured EHR features with an 11-component
+        multi-PRS representation. The study was conducted in a White-ancestry subset of
+        388,746 participants, including 8,900 incident CVD events, where the outcome was
+        defined as the first occurrence of myocardial infarction, stroke, or heart failure
+        within five years after baseline assessment. A two-expert gating architecture was
+        developed to generate separate EHR- and PRS-based predictions and to learn an
+        individual-specific weight reflecting model reliance on genetic risk. Its performance
+        was compared with logistic regression and neural fusion baselines using predefined
+        train/validation splits across multiple seeds and a fixed held-out test set. To obtain
+        reliable risk estimates, seed-wise isotonic calibration was applied on validation
+        predictions and then evaluated through test-time ensembling. Across models,
+        discrimination performance was similar, with AUROC values around 0.78 and the
+        concatenated logistic regression baseline showing the highest mean AUROC among the
+        compared approaches. Although the proposed gating model did not yield a decisive
+        discrimination advantage, it provided interpretable patient-specific estimates of PRS
+        reliance and showed modest, threshold-dependent differences in risk stratification and
+        decision-curve net benefit. Post-hoc isotonic calibration substantially improved
+        calibration metrics, while also contracting predicted probabilities toward the observed
+        event prevalence. In addition, the learned PRS weight tended to be higher in men and
+        to increase with age, suggesting heterogeneity in the relative contribution of genetic
+        information across subgroups. Overall, this thesis shows that adaptive gating offers
+        an interpretable and calibrated approach for integrating EHR and PRS in 5-year CVD
+        risk prediction, while also highlighting the importance of evaluating multimodal
+        prediction models beyond discrimination alone.
+      </p>
+    </section>
+
+    <section id="motivation" class="card">
+      <h2>Research Motivation</h2>
+      <p class="placeholder">
+        Add the research background, clinical importance of 5-year CVD risk prediction,
+        limitations of EHR-only models, and motivation for integrating PRS with EHR.
+      </p>
+    </section>
+
+    <section id="methods" class="card">
+      <h2>Methods</h2>
+      <p class="placeholder">
+        Add the study population, outcome definition, EHR and PRS features, model
+        architecture, calibration pipeline, evaluation metrics, and interpretability analysis.
+      </p>
+    </section>
+
+    <section id="results" class="card">
+      <h2>Results and Performance</h2>
+      <p class="placeholder">
+        Add AUROC/AUPRC, calibration results, subgroup findings, top-k lift, decision
+        curve analysis, and key interpretation points.
+      </p>
+    </section>
+
+    <section id="references" class="card">
+      <h2>References</h2>
+      <ol class="placeholder-list">
+        <li>Reference 1</li>
+        <li>Reference 2</li>
+        <li>Reference 3</li>
+      </ol>
+    </section>
+
+    <section id="related-sites" class="card">
+      <h2>Related Sites</h2>
+      <ul class="placeholder-list">
+        <li><a href="#" target="_blank" rel="noopener noreferrer">Project Repository</a></li>
+        <li><a href="#" target="_blank" rel="noopener noreferrer">UK Biobank</a></li>
+        <li><a href="#" target="_blank" rel="noopener noreferrer">Related Publication / Lab Page</a></li>
+      </ul>
+    </section>
+
+    <section id="resources" class="card">
+      <h2>Files and Resources</h2>
+      <ul class="resource-list">
+        <li><a href="#">Thesis PDF</a></li>
+        <li><a href="#">Source Code</a></li>
+        <li><a href="#">Demo Video</a></li>
+        <li><a href="#">Testing Data</a></li>
+      </ul>
+      <p class="note">
+        Replace each placeholder link with the actual file path or external URL after upload.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Seungyun Shin. All rights reserved.</p>
+  </footer>
+</body>
+</html>
