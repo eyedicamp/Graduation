@@ -4,124 +4,659 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction</title>
+  <meta
+    name="description"
+    content="Master's thesis homepage for Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction."
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="hero">
-    <nav class="top-nav">
-      <div class="nav-title">Master's Thesis</div>
-      <ul class="nav-links">
-        <li><a href="#abstract">Abstract</a></li>
-        <li><a href="#motivation">Motivation</a></li>
-        <li><a href="#methods">Methods</a></li>
-        <li><a href="#results">Results</a></li>
-        <li><a href="#references">References</a></li>
-        <li><a href="#related-sites">Related Sites</a></li>
-        <li><a href="#resources">Files</a></li>
-      </ul>
-    </nav>
-
-    <div class="hero-content">
-      <p class="eyebrow">Pusan National University · Master's Thesis</p>
-      <h1>Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction</h1>
-      <p class="author">Seungyun Shin</p>
+  <header class="site-header">
+    <div class="wrap nav-wrap">
+      <a class="brand" href="#top">Master's Thesis</a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#overview">Overview</a>
+        <a href="#motivation">Motivation</a>
+        <a href="#data">Data</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#evaluation">Evaluation</a>
+        <a href="#results">Results</a>
+        <a href="#interpretation">Interpretation</a>
+        <a href="#limitations">Limitations</a>
+        <a href="#references">References</a>
+        <a href="#resources">Resources</a>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section id="abstract" class="card">
-      <h2>Abstract</h2>
-      <p>
-        Cardiovascular disease (CVD) risk prediction can benefit from combining electronic
-        health records (EHR) with genetic information, yet most existing approaches assume
-        that polygenic risk scores (PRS) contribute uniformly across individuals and often
-        place limited emphasis on calibration and clinical decision utility. This thesis
-        investigates an interpretable multimodal framework for 5-year CVD risk prediction in
-        the UK Biobank by adaptively integrating structured EHR features with an 11-component
-        multi-PRS representation. The study was conducted in a White-ancestry subset of
-        388,746 participants, including 8,900 incident CVD events, where the outcome was
-        defined as the first occurrence of myocardial infarction, stroke, or heart failure
-        within five years after baseline assessment. A two-expert gating architecture was
-        developed to generate separate EHR- and PRS-based predictions and to learn an
-        individual-specific weight reflecting model reliance on genetic risk. Its performance
-        was compared with logistic regression and neural fusion baselines using predefined
-        train/validation splits across multiple seeds and a fixed held-out test set. To obtain
-        reliable risk estimates, seed-wise isotonic calibration was applied on validation
-        predictions and then evaluated through test-time ensembling. Across models,
-        discrimination performance was similar, with AUROC values around 0.78 and the
-        concatenated logistic regression baseline showing the highest mean AUROC among the
-        compared approaches. Although the proposed gating model did not yield a decisive
-        discrimination advantage, it provided interpretable patient-specific estimates of PRS
-        reliance and showed modest, threshold-dependent differences in risk stratification and
-        decision-curve net benefit. Post-hoc isotonic calibration substantially improved
-        calibration metrics, while also contracting predicted probabilities toward the observed
-        event prevalence. In addition, the learned PRS weight tended to be higher in men and
-        to increase with age, suggesting heterogeneity in the relative contribution of genetic
-        information across subgroups. Overall, this thesis shows that adaptive gating offers
-        an interpretable and calibrated approach for integrating EHR and PRS in 5-year CVD
-        risk prediction, while also highlighting the importance of evaluating multimodal
-        prediction models beyond discrimination alone.
-      </p>
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Pusan National University · Department of Information Convergence Engineering</p>
+          <h1>Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction</h1>
+          <p class="subtitle">
+            An interpretable multimodal framework for integrating electronic health records
+            and polygenic risk scores in low-prevalence cardiovascular risk prediction.
+          </p>
+
+          <div class="meta">
+            <span>Seungyun Shin</span>
+            <span>Master of Science Thesis</span>
+            <span>August 2026</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#overview">Read Overview</a>
+            <a class="btn btn-secondary" href="#resources">Files & Resources</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <h2>Project Snapshot</h2>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-label">Cohort</span>
+              <strong>388,746</strong>
+              <span class="stat-note">White-ancestry UK Biobank participants</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Events</span>
+              <strong>8,900</strong>
+              <span class="stat-note">5-year incident CVD events</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Inputs</span>
+              <strong>109 + 11</strong>
+              <span class="stat-note">EHR features + multi-PRS scores</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Best AUROC</span>
+              <strong>0.7882</strong>
+              <span class="stat-note">LR EHR+PRS concat baseline</span>
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <section id="motivation" class="card">
-      <h2>Research Motivation</h2>
-      <p class="placeholder">
-        Add the research background, clinical importance of 5-year CVD risk prediction,
-        limitations of EHR-only models, and motivation for integrating PRS with EHR.
-      </p>
+    <section id="overview" class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Overview</p>
+          <h2>Abstract</h2>
+        </div>
+
+        <div class="card prose">
+          <p>
+            Cardiovascular disease (CVD) risk prediction may benefit from combining
+            electronic health records (EHR) with genetic information, but many models assume
+            uniform polygenic risk score (PRS) contribution and focus mainly on discrimination.
+            This study develops an interpretable framework for 5-year CVD risk prediction in
+            UK Biobank by adaptively integrating structured EHR features and an 11-component
+            multi-PRS representation. The cohort includes 388,746 White-ancestry participants,
+            with 8,900 incident events defined as first myocardial infarction, stroke, or heart
+            failure within five years after baseline. A two-expert gating model produces separate
+            EHR- and PRS-based predictions and learns an individual-specific PRS reliance weight.
+            The framework is compared with logistic regression, tree-based, and neural fusion
+            baselines using multiple seeds and a fixed held-out test set. Isotonic calibration is
+            applied seed-wise and evaluated through test-time ensembling. AUROC values are similar
+            across models at around 0.78, and concatenated logistic regression achieves the highest
+            mean AUROC. Although the gating model does not show a clear discrimination advantage,
+            it provides patient-specific PRS reliance estimates and modest differences in risk
+            stratification and decision-curve net benefit. Overall, adaptive gating offers an
+            interpretable and calibrated approach for EHR–PRS integration and supports evaluation
+            beyond discrimination alone.
+          </p>
+        </div>
+      </div>
     </section>
 
-    <section id="methods" class="card">
-      <h2>Methods</h2>
-      <p class="placeholder">
-        Add the study population, outcome definition, EHR and PRS features, model
-        architecture, calibration pipeline, evaluation metrics, and interpretability analysis.
-      </p>
+    <section id="motivation" class="section alt">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Why this study?</p>
+          <h2>Research Motivation</h2>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Clinical background</h3>
+            <p>
+              Cardiovascular disease remains a leading cause of morbidity and mortality worldwide.
+              Risk prediction is important because it can support early identification of patients
+              who may need more intensive prevention, follow-up, or treatment.
+            </p>
+            <p>
+              In this thesis, the 5-year horizon is treated as clinically actionable: long enough
+              to capture meaningful incident events, but short enough to inform near- to mid-term
+              decision making.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Core research question</h3>
+            <p>
+              Can EHR and PRS be integrated in a patient-specific and interpretable way, rather
+              than assuming that genetic information contributes equally to everyone?
+            </p>
+            <div class="callout">
+              <strong>Main claim:</strong>
+              multimodal CVD prediction should be selective, calibrated, and interpretable.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Why combine EHR and PRS?</h3>
+          <div class="comparison-table">
+            <div class="row head">
+              <div>Modality</div>
+              <div>Meaning</div>
+              <div>Strength</div>
+              <div>Limitation</div>
+            </div>
+            <div class="row">
+              <div>EHR</div>
+              <div>Current clinical burden</div>
+              <div>Direct and actionable</div>
+              <div>Changes over time</div>
+            </div>
+            <div class="row">
+              <div>PRS</div>
+              <div>Inherited susceptibility</div>
+              <div>Stable lifelong signal</div>
+              <div>Limited standalone prediction power</div>
+            </div>
+          </div>
+          <p class="small-note">
+            The thesis argues that these two modalities are complementary rather than redundant.
+          </p>
+        </div>
+      </div>
     </section>
 
-    <section id="results" class="card">
-      <h2>Results and Performance</h2>
-      <p class="placeholder">
-        Add AUROC/AUPRC, calibration results, subgroup findings, top-k lift, decision
-        curve analysis, and key interpretation points.
-      </p>
+    <section id="data" class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Problem and cohort</p>
+          <h2>Dataset and Prediction Task</h2>
+        </div>
+
+        <div class="three-col">
+          <div class="card info-card">
+            <h3>Data source</h3>
+            <p>UK Biobank</p>
+          </div>
+          <div class="card info-card">
+            <h3>Population</h3>
+            <p>White-ancestry participants</p>
+          </div>
+          <div class="card info-card">
+            <h3>Task type</h3>
+            <p>Low-prevalence binary risk prediction</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Cohort summary</h3>
+            <ul class="clean-list">
+              <li><strong>Total participants:</strong> 388,746</li>
+              <li><strong>Incident CVD events:</strong> 8,900</li>
+              <li><strong>Event prevalence:</strong> 2.29%</li>
+              <li><strong>Prediction target:</strong> major CVD event within 5 years after baseline</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Outcome definition</h3>
+            <ul class="clean-list">
+              <li>Myocardial infarction (MI)</li>
+              <li>Stroke</li>
+              <li>Heart failure (HF)</li>
+            </ul>
+            <p class="small-note">
+              The study defines major CVD events using these three outcomes.
+            </p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Input features</h3>
+            <ul class="clean-list">
+              <li><strong>EHR input:</strong> 109 structured clinical features</li>
+              <li><strong>PRS input:</strong> 11 multi-PRS scores</li>
+              <li>Examples include age, sex, blood pressure, laboratory biomarkers,
+                smoking status, anthropometric measurements, and disease history.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Preprocessing</h3>
+            <ul class="clean-list">
+              <li>Median imputation for missing values</li>
+              <li>Standardization fitted on the training split only</li>
+              <li>Validation and test data transformed using training-split preprocessing</li>
+              <li>Fixed held-out test set reused across all seed experiments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="references" class="card">
-      <h2>References</h2>
-      <ol class="placeholder-list">
-        <li>Reference 1</li>
-        <li>Reference 2</li>
-        <li>Reference 3</li>
-      </ol>
+    <section id="methodology" class="section alt">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Model design</p>
+          <h2>Methodology</h2>
+        </div>
+
+        <div class="card">
+          <h3>Overall study pipeline</h3>
+          <div class="pipeline">
+            <div class="step">1. UK Biobank cohort construction</div>
+            <div class="step">2. EHR / PRS input preparation</div>
+            <div class="step">3. Modality-specific preprocessing</div>
+            <div class="step">4. Seed-wise model training</div>
+            <div class="step">5. Validation-based isotonic calibration</div>
+            <div class="step">6. Test-time probability averaging</div>
+            <div class="step">7. Interpretation and decision utility analysis</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Two-expert gating model</h3>
+            <ul class="clean-list">
+              <li><strong>PRS expert:</strong> produces a genetic risk logit using PRS only</li>
+              <li><strong>EHR expert:</strong> produces a clinical risk logit using EHR only</li>
+              <li><strong>Gating network:</strong> predicts an individual-specific PRS reliance weight, <em>w<sub>PRS</sub></em></li>
+              <li><strong>Final prediction:</strong> combines the two logits using the learned reliance weight</li>
+            </ul>
+          </div>
+
+          <div class="card formula-card">
+            <h3>Interpretation of the gate</h3>
+            <p><strong>w<sub>PRS</sub></strong> represents individual-level genetic reliance.</p>
+            <ul class="clean-list">
+              <li>Closer to <strong>0</strong> → more reliance on the EHR expert</li>
+              <li>Closer to <strong>1</strong> → more reliance on the PRS expert</li>
+            </ul>
+            <p class="small-note">
+              This makes the fusion mechanism directly interpretable instead of hiding modality
+              contribution inside a single opaque model.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Baselines</h3>
+          <div class="pill-row">
+            <span class="pill">LR_EHR</span>
+            <span class="pill">LR_PRS</span>
+            <span class="pill">LR_EHR+PRS</span>
+            <span class="pill">HistGradientBoosting</span>
+            <span class="pill">Early Fusion (MLP)</span>
+            <span class="pill">Residual Fusion</span>
+            <span class="pill active">Two-Expert Gating</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="related-sites" class="card">
-      <h2>Related Sites</h2>
-      <ul class="placeholder-list">
-        <li><a href="#" target="_blank" rel="noopener noreferrer">Project Repository</a></li>
-        <li><a href="#" target="_blank" rel="noopener noreferrer">UK Biobank</a></li>
-        <li><a href="#" target="_blank" rel="noopener noreferrer">Related Publication / Lab Page</a></li>
-      </ul>
+    <section id="evaluation" class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">How performance was judged</p>
+          <h2>Evaluation Strategy</h2>
+        </div>
+
+        <div class="card">
+          <div class="metric-grid">
+            <div class="metric-box">
+              <h3>AUROC / AUPRC</h3>
+              <p>Ranking performance</p>
+            </div>
+            <div class="metric-box">
+              <h3>Brier / qECE</h3>
+              <p>Probability calibration</p>
+            </div>
+            <div class="metric-box">
+              <h3>Top-k Lift</h3>
+              <p>High-risk selection quality</p>
+            </div>
+            <div class="metric-box">
+              <h3>Decision Curve Analysis</h3>
+              <p>Threshold-dependent clinical utility</p>
+            </div>
+            <div class="metric-box">
+              <h3>SHAP</h3>
+              <p>EHR + PRS feature importance</p>
+            </div>
+            <div class="metric-box">
+              <h3>Integrated Gradients</h3>
+              <p>PRS expert attribution</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="resources" class="card">
-      <h2>Files and Resources</h2>
-      <ul class="resource-list">
-        <li><a href="#">Thesis PDF</a></li>
-        <li><a href="#">Source Code</a></li>
-        <li><a href="#">Demo Video</a></li>
-        <li><a href="#">Testing Data</a></li>
-      </ul>
-      <p class="note">
-        Replace each placeholder link with the actual file path or external URL after upload.
-      </p>
+    <section id="results" class="section alt">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Main findings</p>
+          <h2>Results and Performance</h2>
+        </div>
+
+        <div class="card">
+          <h3>Main discrimination results</h3>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>AUROC</th>
+                  <th>AUPRC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>LR_EHR_PRS_concat</td>
+                  <td>0.7882</td>
+                  <td>0.1011</td>
+                </tr>
+                <tr>
+                  <td>Early fusion (MLP)</td>
+                  <td>0.7857</td>
+                  <td>0.1007</td>
+                </tr>
+                <tr>
+                  <td>Residual fusion</td>
+                  <td>0.7848</td>
+                  <td>0.1001</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td>Two-expert gating (ours)</td>
+                  <td>0.7843</td>
+                  <td>0.1004</td>
+                </tr>
+                <tr>
+                  <td>HGB</td>
+                  <td>0.7790</td>
+                  <td>0.0904</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small-note">
+            Logistic regression with simple EHR+PRS concatenation was already a very strong baseline.
+            The proposed model was motivated more by interpretability and selective reliance than by
+            maximizing AUROC alone.
+          </p>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Calibration results</h3>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>Brier</th>
+                    <th>qECE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>LR concat (raw)</td>
+                    <td>0.1932</td>
+                    <td>0.3662</td>
+                  </tr>
+                  <tr>
+                    <td>LR concat (isotonic)</td>
+                    <td>0.0214</td>
+                    <td>0.0018</td>
+                  </tr>
+                  <tr>
+                    <td>Gating (raw)</td>
+                    <td>0.1946</td>
+                    <td>0.3626</td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td>Gating (isotonic)</td>
+                    <td>0.0214</td>
+                    <td>0.0023</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Calibration takeaway</h3>
+            <p>
+              After class-weighted training, raw predicted probabilities were much larger than the
+              actual event prevalence. Seed-wise isotonic calibration substantially improved Brier
+              score and qECE while keeping AUROC and AUPRC nearly unchanged.
+            </p>
+            <p>
+              However, calibration also contracted the prediction distribution toward the low-prevalence
+              event rate, making probabilities more reliable but less sharp.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>High-risk selection: Top-k lift</h3>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Top-k</th>
+                  <th>LR concat</th>
+                  <th>Early fusion</th>
+                  <th>Gating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0.5%</td>
+                  <td>11.108</td>
+                  <td>12.034</td>
+                  <td>11.802</td>
+                </tr>
+                <tr>
+                  <td>1.0%</td>
+                  <td>9.025</td>
+                  <td>9.951</td>
+                  <td>9.835</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td>2.0%</td>
+                  <td>7.613</td>
+                  <td>7.613</td>
+                  <td>7.729</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td>5.0%</td>
+                  <td>5.199</td>
+                  <td>5.327</td>
+                  <td>5.431</td>
+                </tr>
+                <tr>
+                  <td>10.0%</td>
+                  <td>4.070</td>
+                  <td>4.047</td>
+                  <td>4.041</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small-note">
+            The gating model was not the top model by AUROC, but it showed the strongest enrichment
+            in the top 2–5% high-risk groups.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="interpretation" class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">What the model reveals</p>
+          <h2>Interpretation and Clinical Meaning</h2>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>PRS reliance pattern</h3>
+            <p>
+              The learned <strong>w<sub>PRS</sub></strong> captures how much PRS contributes to each
+              patient’s final prediction.
+            </p>
+            <ul class="clean-list">
+              <li>Higher in men than in women</li>
+              <li>Tends to increase with age</li>
+              <li>Shows that PRS was not used uniformly across individuals</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Feature attribution</h3>
+            <ul class="clean-list">
+              <li><strong>SHAP:</strong> age, sex, cystatin C, and CAD-related PRS were important signals</li>
+              <li><strong>Integrated gradients:</strong> CAD, ischemic stroke, and heart-failure-related PRS components were influential inside the PRS expert</li>
+              <li>The model used both clinically meaningful EHR signals and disease-relevant genetic signals</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card callout large">
+          <strong>Final interpretation:</strong>
+          PRS should not be treated as information that is added identically to every patient.
+          Instead, the findings support the idea that genetic risk should be used selectively,
+          depending on the individual.
+        </div>
+      </div>
+    </section>
+
+    <section id="limitations" class="section alt">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Caveats</p>
+          <h2>Limitations and Future Work</h2>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Limitations</h3>
+            <ul class="clean-list">
+              <li>Population generalizability is limited because the analysis focused on a White-ancestry subset of UK Biobank.</li>
+              <li>Evaluation was based on internal train/validation/test splits rather than an external independent cohort.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Future work</h3>
+            <ul class="clean-list">
+              <li>External validation in independent cohorts</li>
+              <li>Validation in diverse ancestry groups</li>
+              <li>Assessment of transportability under dataset shift</li>
+              <li>Extension to richer longitudinal EHR and broader genetic representations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="references" class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Selected bibliography</p>
+          <h2>References</h2>
+        </div>
+
+        <div class="card">
+          <ol class="reference-list">
+            <li>Arnett et al., <em>JACC</em>, 2019.</li>
+            <li>Goff et al., <em>Circulation</em>, 2014.</li>
+            <li>Roth et al., <em>JACC</em>, 2020.</li>
+            <li>Bycroft et al., <em>Nature</em>, 2018.</li>
+            <li>Sudlow et al., <em>PLOS Medicine</em>, 2015.</li>
+            <li>Weng et al., <em>PLOS ONE</em>, 2017.</li>
+            <li>Khera et al., <em>Nature Genetics</em>, 2018.</li>
+            <li>Inouye et al., <em>JACC</em>, 2018.</li>
+            <li>Van Calster et al., <em>BMC Medicine</em>, 2019.</li>
+            <li>Vickers and Elkin, <em>Medical Decision Making</em>, 2006.</li>
+            <li>Lundberg and Lee, <em>NeurIPS</em>, 2017.</li>
+            <li>Sundararajan et al., <em>ICML</em>, 2017.</li>
+            <li>Zadrozny and Elkan, <em>KDD</em>, 2002.</li>
+          </ol>
+          <p class="small-note">
+            Replace or expand this list with the final thesis bibliography if you want the homepage
+            to mirror the complete reference section.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" class="section alt">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-kicker">Downloads and links</p>
+          <h2>Files and Resources</h2>
+        </div>
+
+        <div class="three-col">
+          <div class="card resource-card">
+            <h3>Thesis PDF</h3>
+            <p>Add the final thesis file here.</p>
+            <a class="text-link" href="#">thesis.pdf</a>
+          </div>
+
+          <div class="card resource-card">
+            <h3>Presentation Slides</h3>
+            <p>Add the final 발표자료 PDF or PPTX here.</p>
+            <a class="text-link" href="#">slides.pdf / slides.pptx</a>
+          </div>
+
+          <div class="card resource-card">
+            <h3>Source Code</h3>
+            <p>Link your GitHub repository for preprocessing, training, calibration, and evaluation.</p>
+            <a class="text-link" href="#">GitHub Repository</a>
+          </div>
+
+          <div class="card resource-card">
+            <h3>Demo Video</h3>
+            <p>Add your presentation or system demonstration video link.</p>
+            <a class="text-link" href="#">YouTube / Google Drive</a>
+          </div>
+
+          <div class="card resource-card">
+            <h3>Testing Data</h3>
+            <p>Add a sample or synthetic test dataset if you plan to share one publicly.</p>
+            <a class="text-link" href="#">testing_data.zip</a>
+          </div>
+
+          <div class="card resource-card">
+            <h3>Related Site</h3>
+            <p>Add lab homepage, UK Biobank, or publication links.</p>
+            <a class="text-link" href="#">External Link</a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <p>© 2026 Seungyun Shin. All rights reserved.</p>
+  <footer class="site-footer">
+    <div class="wrap footer-wrap">
+      <p>© 2026 Seungyun Shin</p>
+      <p>Adaptive Gating of EHR and PRS for 5-Year CVD Risk Prediction</p>
+    </div>
   </footer>
 </body>
 </html>
